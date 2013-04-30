@@ -1,0 +1,1319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Modern Web App Structure And Deployment</title>
+
+<meta name="description" content="Using modules and build tools to eek out performance and developer happiness from your apps.">
+<meta name="author" content="Alex Sexton">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="css/reveal.min.css">
+<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+<style type="text/css">
+  /* quick overrides */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  text-transform: none;
+}
+.reveal h1 {
+  font-size: 3em;
+}
+.reveal pre {
+  font-size: 1em;
+  width: 118%;
+  margin-left: -5%;
+  padding: 10px;
+  background-color: rgba(0,0,0, 0.1);
+}
+.reveal pre code {
+  padding: 10px;
+  max-height: 700px;
+  /*-webkit-filter: invert(100%); BACK POCKET */
+}
+section[t] h1 {
+  font-size: 2.75em;
+  margin-bottom: 1em;
+}
+section[t] h2 {
+  letter-spacing: -2px;
+}
+section[t] blockquote {
+  border: 4px solid #CDC9C3;
+  border-radius: 10px;
+  background-color: #EFEFEF;
+  padding: 20px;
+}
+.reveal em {
+  color: #BADA55;
+  font-style: normal;
+  text-shadow: 1px 1px 0 #FFFFFF, 3px 3px 0 #000000;
+}
+.reveal iframe {
+  max-height: none;
+}
+.reveal img {
+  max-width: none;
+}
+.reveal [data-small-code] pre {
+  font-size: 0.55em;
+}
+</style>
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+
+    <section>
+      <h1>Modern Webapp Structure &amp; Deployment</h1>
+      <h4>Future Insights Live, May 2013</h4>
+      <p>
+      <small><a href="http://alexsexton.com">Alex Sexton</a> / <a href="http://twitter.com/slexaxton">@SlexAxton</a></small>
+      </p>
+    </section>
+
+<section data-markdown t>
+<script type="text/template">
+## Me
+
+* UI Engineer at Bazaarvoice in Austin, TX
+* Hate bulleted lists
+* jQuery Board of Advisors
+* Modernizr Core Team
+* Run TXJS
+</script>
+</section>
+
+
+<!-------START NORMAL SLIDES ----------->
+
+<section data-markdown class="oneliner">
+<script type="text/template">
+# Web Application Structure
+</script>
+</section>
+
+<section data-markdown class="oneliner">
+<script type="text/template">
+# With Modules!
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Modules are not new
+
+<br />
+```javascript
+function Module () {
+  return {
+    someStuff: { ... }
+  };
+}
+```
+
+&nbsp;
+
+So why do I need them now?
+
+</script>
+</section>
+
+<section data-markdown>
+![lib/img/brain.jpg](lib/img/brain.jpg)
+<br />
+
+Your need for modules is directly related to how much of your app you can hold in your head at once.
+</section>
+
+<section data-markdown class="oneliner">
+The *MVC* (or *MVWTF*) pattern is appealing for large applications and encourages code reuse &amp; separation of concerns.
+</section>
+
+<section data-markdown>
+# In other words
+
+<br />
+
+### Modules and MVWTF Apps
+### *were made for each other*
+</section>
+
+
+
+<section data-markdown>
+## All too common
+
+```sh
+|+ App
+&nbsp;|- app.js
+ |- controllers.js
+ |- models.js
+ |- views.js
+ |- index.html
+```
+
+<br />
+
+### *Dependency management hell*
+</section>
+
+<section data-markdown class="oneliner">
+## How about a *module per file*?
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Option 1
+
+```javsacript
+var UserModel = require('Models/User');
+var UserView = require('Views/User');
+```
+
+Which results in this file structure
+
+```sh
+|+ App
+ |+ Models
+  |- User.js
+ |+ Views
+  |- User.js
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Option 2
+
+```javscript
+var UserModel = require('User/Model');
+var UserView  = require('User/View');
+```
+
+Which results in this file structure
+
+```sh
+|+ App
+ |+ User
+  |- Model.js
+  |- View.js
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Option 3
+
+```javascript
+var UserModel = require('UserModel');
+var UserView  = require('UserView');
+```
+
+Which results in this file structure
+
+```sh
+|+ App
+ |- UserModel.js
+ |- UserView.js
+```
+</script>
+</section>
+</section>
+
+<section data-markdown class="oneliner">
+## Now it's much easier to find things. *promise*.
+</section>
+
+<section data-markdown class="oneliner">
+# *perks*.
+</section>
+
+<section data-markdown class="oneliner">
+## You can *find* your code.
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Code Reuse
+
+```javascript
+require(['util/A'], function (A) {
+  A.hi = 5;
+});
+
+// The same instance
+require(['util/A'], function (A) {
+  A.hi === 5 // true
+});
+
+// Or create new instances if you want!
+```
+</script>
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Debugging
+
+```sh
+There was an error in /util/A.js on line 65.
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Debugging but Worse
+
+```sh
+There was an error in /built-app.js on line 19823.
+```
+
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Anonymous defines
+
+### From this
+
+```javascript
+define('some/module', function () {
+  ...
+});
+```
+
+</script>
+</section>
+<section data-markdown>
+<script type="text/template">
+## Anonymous defines
+
+### To this
+
+```javascript
+define(/* just_use_the_filename, */ function () {
+  ...
+});
+```
+
+</script>
+</section>
+</section>
+
+<section data-markdown class="oneliner">
+## When you no longer *require* a
+## file, it is no longer requested
+## or included.
+
+# &nbsp;
+
+### performance++
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Decoupled Mapping
+
+Alias modules
+
+```javascript
+({
+  "paths" : {
+    "underscore" : "lodash"
+  }
+})
+```
+
+```javascript
+require(['underscore'], function (_) {
+  _.isLodash === true
+});
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Decoupled Mapping
+
+Lose ugly paths
+
+```javascript
+({
+  "paths" : {
+    "template" : "../../static/template"
+  }
+})
+```
+
+```javascript
+require(['../../static/template/base'], ...);
+// vs.
+require(['template/base'], ...);
+```
+
+</script>
+</section>
+
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Hierarchy
+
+### With this file/folder structure
+
+```sh
+|+ App
+ |- jquery.js
+ |+ jquery
+  |- ui.js
+  |+ ui
+   |- draggable.js
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Hierarchy
+
+### The names can still be decent
+
+```javascript
+require(['jquery'], ...);
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Hierarchy
+
+### The names can still be decent
+
+```javascript
+require(['jquery/ui'], ...);
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Hierarchy
+
+### The names can still be decent
+
+```javascript
+require(['jquery/ui/draggable'], ...);
+```
+</script>
+</section>
+
+<section data-markdown class="oneliner">
+  ### In the end, you're left with
+  ### *easily traversable*
+  ### files that describe their contents,
+  ### and most importantly,
+  ## maintain their own dependencies.
+</section>
+</section>
+
+<section>
+<section data-markdown class="oneliner">
+  ## Templates are treated as dependencies
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## I'm so tired of this
+
+```html
+...
+</div>
+<script type="text/tmpl" id="someTmpl">
+  {{data}}
+< /script>
+<script type="text/tmpl" id="someTmpl2">
+  {{data}} 2
+< /script>
+</body>
+```
+</script>
+</section>
+
+<section data-markdown class="oneliner">
+  ### Unless you heavily cache your html
+  ### payload and need dynamic templates
+  ### at runtime, you're
+  ## *hurting performance*.
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Minimally, pull in text
+
+```javascript
+// Ajax'd during development,
+// Built as a string in production.
+require(['text!tmpl/one'], function (tmplTxt) {
+  // compile and register template here.
+});
+```
+
+### Better ways than this to come.
+</script>
+</section>
+
+<section data-markdown class="oneliner">
+  ## Styles can be dependencies of templates as well
+</section>
+
+<section data-markdown class="oneliner">
+  ## Same goes for template helpers and UI Messages
+</section>
+</section>
+
+<section>
+<section data-markdown class="oneliner">
+  # An *AMD* Tangent
+</section>
+
+<section data-markdown class="oneliner">
+  ## I prefer *AMD*
+
+  and I specifically use RequireJS
+</section>
+
+<section data-markdown class="oneliner">
+  I think it's the best solution for modules on the web that we currently have.
+</section>
+
+<section data-markdown class="oneliner">
+  The web is *async*.
+</section>
+
+<section data-markdown class="oneliner">
+  The plugin system is killer.
+  *Seriously.*
+  I'll show you in a bit.
+</section>
+
+<section data-markdown class="oneliner">
+  I think it's fine as a
+  *compilation target*
+  if you hate the syntax.
+
+  <br />
+  <small>But I think a unified target is ideal.</small>
+</section>
+
+<section data-markdown class="oneliner">
+  Ember does a good job of AMD as a
+  compilation target with
+  *Ember.amd.js*
+</section>
+
+<section data-markdown>
+  # FUD | Collisions
+
+  <br />
+  There are well established ways to support AMD in every comination of systems.
+  <br />
+  Check out [github.com/amdjs](https://github.com/amdjs)
+</section>
+
+<section data-markdown>
+  # FUD | Boilerplate
+
+  <br />
+  AMD actually requires less characters/lines than the popular alternatives.
+
+  <pre><code contenteditable>var x = require('x');
+  var y = require('y');
+  var z = require('z');
+  // vs.
+  require(['x', 'y', 'z'], function (x,y,z) {
+
+  });
+  </code></pre>
+  <br />
+
+  Not to mention, browser-side code needs minimally an IIFE to not leak.
+</section>
+
+<section data-markdown class="oneliner">
+  Use.js helps with unmodified source
+  of modules that do not use AMD.
+  I prefer to just add it.
+  *It's easy™.*
+</section>
+
+<section data-markdown class="oneliner">
+  Build.sh has to go away.
+  We need a complex dependency management solution.
+
+  <br />
+
+  <small>I'm glad it's here now, though, because script-tag soup is awful</small>
+</section>
+
+<section data-markdown class="oneliner">
+  I think our dependency management tools shouldn't require load time preprocessing.
+
+  <br />
+
+  <small>but if you want to enhance it at load time, that's fine</small>
+</section>
+
+<section data-markdown class="oneliner">
+  I think our dependency management shouldn't *require* us to need to run other languages.
+</section>
+
+<section data-markdown class="oneliner">
+  I think our dependency management shouldn't force us to manage dependencies outside of our code.
+
+  <br />
+
+  <small>you'll forget/get it wrong.</small>
+</section>
+
+<section data-markdown class="oneliner">
+  ES *Harmony Modules* look cool.
+
+  <small>But aren't currently viable/stable. Use those when they are.</small>
+</section>
+
+<section data-markdown class="oneliner">
+  I have a lengthy blog post on [my thoughts on AMD](http://alexsexton.com/blog/2012/03/my-thoughts-on-amd/).
+</section>
+
+</section>
+
+<section data-markdown class="oneliner">
+So from now on, I'm gonna use *AMD* in these examples.
+
+<br />
+
+<small style="line-height:0.8;">Nearly everything is possible via other module systems via load time precompilation, but my examples are already implementable in require.js, etc.</small>
+</section>
+
+<section>
+<section data-markdown>
+  ## My new puppy: *batman*
+
+  <img src="img/batman1.jpg" style="height:600px" />
+</section>
+<section data-markdown>
+  ## My new puppy: *batman*
+
+  <img src="img/batman2.jpg" style="height:600px" />
+</section>
+<section data-markdown>
+  ## My new puppy: *batman*
+
+  <img src="img/batman3.jpg" style="height:600px" />
+</section>
+<section data-markdown>
+  ## My new puppy: *batman*
+
+  <img src="img/batman4.jpg" style="height:600px" />
+</section>
+<section data-markdown>
+  ## My new puppy: *batman*
+
+  <img src="img/batman5.jpg" style="height:600px" />
+</section>
+</section>
+
+<section data-markdown class="oneliner">
+# AMD Plugins
+</section>
+
+<section data-markdown class="oneliner">
+## *Transparent Middleware*
+
+Think Connect for node, but for your modules
+</section>
+
+<style type="text/css">
+.flowchart {
+  margin-top : 100px;
+}
+.flowchart div {
+  color : #A6E22E;
+  font-weight : bold;
+  width : 340px;
+  height : 240px;
+  float: left;
+  margin : 20px;
+  padding : 100px 20px 0;
+  border : 3px solid #333;
+  background-color: #666;
+  box-shadow : 0 0 30px #333;
+}
+</style>
+<section>
+<section data-markdown>
+  ## How plugins work
+
+  <div class="flowchart">
+    <div>Require a module</div>
+    <div>Modify or change the module</div>
+    <div>Return the result</div>
+  </div>
+</section>
+<section data-markdown>
+  ## How plugins work
+
+  <br />
+  <pre><code contenteditable>write: function (pluginName, name, write) { ... },
+  load: function (name, parentRequire, load, config) {
+    // Require the intended dependency
+    parentRequire([name], function (val) {
+      // Add extra functionality
+      val.extra = function () { alert('extra!'); };
+      // resolve the dependency manually
+      load(val);
+    });
+  }
+  </code></pre>
+  <pre><code contenteditable>require(['plugin!module'], function (module) {
+    module.extra(); // alerts 'extra!'
+  });
+  </code></pre>
+</section>
+</section>
+
+<section data-markdown class="oneliner">
+We can signficantly *reduce boilerplate* by using this simple feature.
+</section>
+
+<section data-markdown class="oneliner">
+# Getting Rid of MVWTF *Boilerplate*
+</section>
+
+<section data-markdown class="oneliner">
+One of the goals of ES Harmony is to reduce
+*setup boilerplate*.
+We should have the same goals in our modules.
+</section>
+
+<section>
+<section data-markdown>
+  ## A simple example
+
+  What can we get rid of?
+  <pre><code contenteditable>define('view/main', [
+  'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
+  ], function (Backbone, Handlebars, oneTxt, myHelper) {
+    Handlebars.registerHelper('myHelper', myHelper);
+    return Backbone.view.extend({
+      initialize : function () {
+        this.template = Handlebars.compile(oneTxt);
+      }
+    });
+  });
+  </code></pre>
+</section>
+
+<section data-markdown>
+  ## A simple example
+
+  First let's make it an anonymous module
+  <pre><code contenteditable>define([
+  'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
+  ], function (Backbone, Handlebars, oneTxt, myHelper) {
+    Handlebars.registerHelper('myHelper', myHelper);
+    return Backbone.view.extend({
+      initialize : function () {
+        this.template = Handlebars.compile(oneTxt);
+      }
+    });
+  });
+  </code></pre>
+</section>
+
+<section data-markdown style="margin-top:-7%;">
+  ## A simple example
+
+  Then let's require it via a *view!* plugin
+  <pre><code contenteditable>define([
+  &nbsp; 'handlebars', 'text!tmpl/one', 'h/myHelper'
+  ], function (Handlebars, oneTxt, myHelper) {
+    Handlebars.registerHelper('myHelper', myHelper);
+    return {
+      initialize : function () {
+        this.template = Handlebars.compile(oneTxt);
+      }
+    };
+  });
+  // use via: require('view!main');
+  // the view! plugin could automatically start in the
+  // `view` folder for you
+  </code></pre>
+
+  The *view!* plugin would simply return the module wrapped as a Backbone.extended object
+</section>
+
+<section data-markdown>
+  ## A simple example
+
+  Then let's turn template compilation into a plugin too
+  <pre><code contenteditable>define(['handlebars', 'hbs!tmpl/one', 'h/myHelper'],
+  function (Handlebars, one, myHelper) {
+    Handlebars.registerHelper('myHelper', myHelper);
+    return {
+      initialize : function () {
+        this.template = one;
+      }
+    };
+  });
+  </code></pre>
+
+  <br />
+
+  The *hbs!* plugin can just return templates as a function.
+</section>
+
+<section data-markdown>
+  ## A simple example
+
+  Then let's resolve the template's dependencies automatically
+  <pre><code contenteditable>define(['hbs!tmpl/one'], function (one) {
+    return {
+      initialize : function () {
+        this.template = one;
+      }
+    };
+  });
+  </code></pre>
+
+  <br />
+
+  With handlebars, I can just introspect a template's AST to figure out it's dependencies.
+</section>
+
+<section data-markdown>
+  ## A simple example
+
+  *Ultimately*
+  you could create a convention to always
+  have a template with the same name as a view
+  <pre><code contenteditable>define({
+      initialize : function () {}
+  });
+  </code></pre>
+
+  <br />
+
+  <small>This one is a bit extreme, as most apps can't follow that convention rigidly.
+  And because a real world example would have other dependencies anyways. But it has a nice effect.</small>
+</section>
+
+<section data-markdown>
+  ## A simple example
+
+  <br />
+  *And since I'm being contrived*
+  <pre><code contenteditable>define({});
+    </code></pre>
+
+  <br />
+
+  Backbone doesn't require you to define an *initialize* function.
+</section>
+</section>
+
+
+<section data-markdown class="oneliner">
+# Builds and performance
+</section>
+
+<section data-markdown class="oneliner">
+## Plugins as a vehicle for build time
+## *static compilation*
+</section>
+
+<section data-markdown class="oneliner">
+There's so much that your app *doesn't* need to do at runtime in production.
+</section>
+
+<section data-markdown>
+## Consider Templates
+
+<br />
+<pre><code contenteditable>require(['handlebars', 'text!tmpl'],
+function (Handlebars, tmpl) {
+  alert( Handlebars.compile( tmpl )({ data: 1 }) );
+});
+</code></pre>
+
+<br />
+
+This includes the parser and the compiler for Handlebars, and must re-run those (slowest) parts on each render.
+</section>
+
+<section data-markdown class="oneliner">
+How many of you are
+*precompiling*
+templates at all?
+</section>
+
+<section>
+<section data-markdown>
+  ## Auto precompilation
+
+  We can make our modules do _all_ the work here.
+
+  <pre><code contenteditable>load: function (name, parentRequire, load, config) {
+    load.asText('hbs!'+name,
+      'define(["handlebars"], function (H){ '+
+       'return H.template(H.precompile(' + tmplTxt +
+      ')); })');
+
+    parentRequire(['hbs!'+name], function (val) {
+      load(val);
+    });
+  }
+  </pre></code>
+</section>
+
+<section data-markdown class="oneliner">
+  At runtime before build, the plugin is *eval'd*.
+</section>
+
+<section data-markdown class="oneliner">
+  At build-time, it is written directly as the module.
+</section>
+
+<section data-markdown>
+  ## We now have a *transparent* way of
+
+  ## &nbsp;
+
+  * Pulling in a template
+  * Compiling it
+  * Resolving all of its dependencies
+  * Precompiling it at build time
+  * Adding in introspection and buildtime
+    optimizations (dead code removal)
+</section>
+
+<section data-markdown class="oneliner">
+  ## we can go *deeper*
+</section>
+
+<section data-markdown class="oneliner">
+  ## Templates can declare *style* dependencies
+
+  and we can build up only the styles that are _used_.
+</section>
+
+<section data-markdown class="oneliner">
+  ## We can introspect CSS
+
+  and *inline images* as data-uris at build time.
+</section>
+
+<section data-markdown class="oneliner">
+  ## We can inline the entire CSS block
+
+  (including data-uris) and inject it with a *&lt;style&gt;* tag.
+</section>
+
+<section data-markdown class="oneliner">
+  ## We can bring our entire app down to a
+  ## *single request*
+</section>
+
+</section>
+
+<section>
+<section data-markdown class="oneliner">
+  ## Static precompiliation is *so cool*
+</section>
+
+<section data-markdown>
+  ## Dead Code Removal
+
+  Use in tandem with *has.js* to enable dead code removal.
+
+  <pre><code contenteditable>if (has('val') ) {
+  &nbsp;  doSomething();
+  }
+  // changes to
+  if (false) {
+    doSomething();
+  }
+  </code></pre>
+
+  <br />
+
+  Uglify will remove dead code blocks like this
+</section>
+
+<section data-markdown>
+  ## Transparently precompile everything
+
+  ## &nbsp;
+
+  * templates
+  * i18n
+  * i18n in templates
+  * configurable apps. multi-profile apps.
+  * coffeescript
+  * less.js
+
+</section>
+
+<section data-markdown>
+  ## Build Profiles
+
+  <pre><code contenteditable>require(['profile!module'], function (mod) {
+    // mod is different depending on the profile setting.
+  });
+  </code></pre>
+
+  <br />
+
+  This can be *hugely* helpful when doing
+  specialized builds for *IE* or *Mobile Devices*.
+
+  <br />
+  Consider simply a jQuery/zepto profile.
+
+  <br />
+  See [jensarps/AMD-feature](https://github.com/jensarps/AMD-feature)
+</section>
+
+</section>
+
+<section data-markdown class="oneliner">
+The goal is to have a nice dev experience, but at build time, send absolutely *only* the code that is *necessary* and *precompute everything* possible.
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+# Deploying JavaScript Applications
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## A recent blogpost
+
+[alexsexton.com/blog/2013/03/deploying-javascript-applications/](http://alexsexton.com/blog/2013/03/deploying-javascript-applications/)
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Performance and UX are **inextricably** linked
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+# **Balance**
+
+&nbsp;
+
+### Lots of cool JS, CSS, &amp; Images
+## **vs.**
+### Small payloads and minimal bloat
+</script>
+</section>
+
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+# **Builds**
+
+Develop with **builds** in mind.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Use a **dependency management** tool
+
+#### RequireJS, Browserify, Rails Asset Pipeline, etc
+
+I prefer tools that allow me to declare my dependencies **once**.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Prioritize *fast*, *easy* builds
+
+```javascript
+grunt build
+```
+
+![lib/img/gruntbuild.gif](lib/img/gruntbuild.gif)
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Load the **absolute minimum** on pageload
+
+### This is where **Modernizr** can help.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## JavaScript **Parsing** is slow, too
+
+File-size aside, **the amount** of JS you load makes a difference
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## **Defer** functionality until you think you need it
+
+![lib/img/delaypackage.gif](lib/img/delaypackage.gif)
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## The **Scout File**
+
+Pretty much a fancy name for a bootstrap file
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## The **Scout File**
+
+## One file that is the **brain** for deciding what gets loaded.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## The **Scout File**
+
+## Super small - no dependencies
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## The **Scout File**
+
+## Lightly Cached
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## **Everything Else**
+
+# **Cached Forever**
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## The **Scout File**
+
+## You can use *modernizr* to load exactly the build that the user needs (and nothing more)
+</script>
+</section>
+
+<section data-markdown data-small-code>
+<script type="text/template">
+## Simple Example of Scout File
+### (For studying later :)
+```javascript
+// Simplified example of a scout file
+(function () {
+  // Feature test some stuff
+  var features = {
+    svg: Modernizr.svg,
+    touch: Modernizr.touch
+  };
+
+  // The async script injection fanfare
+  var script = document.createElement('script');
+  var fScript = document.getElementsByTagName('script')[0];
+
+  var baseUrl = '//cool-cdn.com/bucket/' + __BUILDNUM__ + '/';
+
+
+  // Build up a file url based on the features of this user
+  var featureString = '';
+  for (var i in features) {
+    if (features.hasOwnProperty(i) && features[i]) {
+      featuresString += '-' + i;
+    }
+  }
+  var package = 'build' + featureString + '.js'
+
+  // Set the URL on the script
+  script.src = baseUrl + package;
+
+  // Inject the script
+  fScript.parentNode.insertBefore(script, fScript);
+
+  // Start loading the data that you know you can grab right away
+  // JSONP is small and easy to kick off for this.
+  var dataScript = document.createElement('script');
+
+  // Create a JSONP Url based on some info we have.
+  // We'll assume localstorage for this example
+  // though a cookie or url param might be safer.
+
+  window.appInitData = function (initialData) {
+    // Get it to the core application when it eventually
+    // loads or if it's already there.
+    // A global is used here for ease of example
+    window.comeGetMe = initialData;
+  };
+
+  // If we're on a static site, the url might tell us
+  // the data we need, and the user cookie might customize
+  // it. Simplified.
+  dataScript.src = '//api.mysite.com' +
+                   document.location.pathname +
+                   '?userid=' +
+                   localStorage.getItem('userid') +
+                   '&callback=appInitData;';
+
+  // Inject it
+  fScript.parentNode.insertBefore(dataScript, fScript);
+})();
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Edge Cache **Everything**
+
+Use any of the popular CDNs to get your **static builds** closer to their consumers
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## **All Together**
+
+### Enjoy a **fast**, well-functioning experience, tailored for **specific** audiences based on their own expectations.
+</script>
+
+<aside class="notes">
+This is pretty close to our goal of 'best experience for widest possible audience'
+</aside>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Deliver the best possible **experience**
+## to the **widest audience** possible
+</script>
+</section>
+
+
+<!-------END NORMAL SLIDES ----------->
+
+    <section>
+      <h1>Fin.</h1>
+      <h3>Questions?</h3>
+
+      <p>
+      <small><br> <a href="http://alexsexton.com/talks/modern-webapp-structure-and-deployment">alexsexton.com/talks/modern-webapp-structure-and-deployment</a></small>
+      </p>
+    </section>
+
+  </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+
+<script>
+
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+  width: 1024,
+
+  theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+  transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/highlight/highlight.js', async: true, callback: function() {
+      hljs.initHighlightingOnLoad();
+    } },
+    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+    //,{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});
+
+</script>
+
+</body>
+</html>
