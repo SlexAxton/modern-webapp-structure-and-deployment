@@ -1,2 +1,2 @@
-# Modernizr 3 Workflow
+# Modern Webapp Structure and Deployment
 ## Alex Sexton
