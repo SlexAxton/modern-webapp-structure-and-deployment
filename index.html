@@ -39,7 +39,7 @@ document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.se
 }
 .reveal pre {
   font-size: 1em;
-  width: 118%;
+  width: 121%;
   margin-left: -5%;
   padding: 10px;
   background-color: rgba(0,0,0, 0.1);
@@ -109,13 +109,13 @@ section[t] blockquote {
 
 <!-------START NORMAL SLIDES ----------->
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 <script type="text/template">
 # Web Application Structure
 </script>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 <script type="text/template">
 # With Modules!
 </script>
@@ -148,8 +148,8 @@ So why do I need them now?
 Your need for modules is directly related to how much of your app you can hold in your head at once.
 </section>
 
-<section data-markdown class="oneliner">
-The *MVC* (or *MVWTF*) pattern is appealing for large applications and encourages code reuse &amp; separation of concerns.
+<section data-markdown>
+### Similarly, the *MVC* (or *MVWTF*) pattern is appealing for large applications and encourages code reuse &amp; separation of concerns.
 </section>
 
 <section data-markdown>
@@ -180,7 +180,7 @@ The *MVC* (or *MVWTF*) pattern is appealing for large applications and encourage
 ### *Dependency management hell*
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## How about a *module per file*?
 </section>
 
@@ -247,15 +247,15 @@ Which results in this file structure
 </section>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## Now it's much easier to find things. *promise*.
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 # *perks*.
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## You can *find* your code.
 </section>
 
@@ -332,7 +332,7 @@ define(/* just_use_the_filename, */ function () {
 </section>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## When you no longer *require* a
 ## file, it is no longer requested
 ## or included.
@@ -446,7 +446,7 @@ require(['jquery/ui/draggable'], ...);
 </script>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ### In the end, you're left with
   ### *easily traversable*
   ### files that describe their contents,
@@ -456,7 +456,7 @@ require(['jquery/ui/draggable'], ...);
 </section>
 
 <section>
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## Templates are treated as dependencies
 </section>
 
@@ -464,13 +464,13 @@ require(['jquery/ui/draggable'], ...);
 <script type="text/template">
 ## I'm so tired of this
 
-```html
+```sh
 ...
 </div>
-<script type="text/tmpl" id="someTmpl">
+< script type="text/tmpl" id="someTmpl">
   {{data}}
 < /script>
-<script type="text/tmpl" id="someTmpl2">
+< script type="text/tmpl" id="someTmpl2">
   {{data}} 2
 < /script>
 </body>
@@ -478,7 +478,7 @@ require(['jquery/ui/draggable'], ...);
 </script>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ### Unless you heavily cache your html
   ### payload and need dynamic templates
   ### at runtime, you're
@@ -501,172 +501,165 @@ require(['text!tmpl/one'], function (tmplTxt) {
 </script>
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## Styles can be dependencies of templates as well
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## Same goes for template helpers and UI Messages
 </section>
 </section>
 
 <section>
-<section data-markdown class="oneliner">
+<section data-markdown>
   # An *AMD* Tangent
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## I prefer *AMD*
 
-  and I specifically use RequireJS
+  ### and I specifically use RequireJS
 </section>
 
-<section data-markdown class="oneliner">
-  I think it's the best solution for modules on the web that we currently have.
+<section data-markdown>
+  ### I think it's the best solution for modules on the web that we currently have.
 </section>
 
-<section data-markdown class="oneliner">
-  The web is *async*.
+<section data-markdown>
+  ## The web is *async*.
 </section>
 
-<section data-markdown class="oneliner">
-  The plugin system is killer.
-  *Seriously.*
-  I'll show you in a bit.
+<section data-markdown>
+  ### The plugin system is killer.
+  ## *Seriously.*
+  ### I'll show you in a bit.
 </section>
 
-<section data-markdown class="oneliner">
-  I think it's fine as a
-  *compilation target*
-  if you hate the syntax.
+<section data-markdown>
+  ### I think it's fine as a
+  ## *compilation target*
+  ### if you hate the syntax.
 
-  <br />
+  ## &nbsp;
+
   <small>But I think a unified target is ideal.</small>
-</section>
-
-<section data-markdown class="oneliner">
-  Ember does a good job of AMD as a
-  compilation target with
-  *Ember.amd.js*
 </section>
 
 <section data-markdown>
   # FUD | Collisions
 
-  <br />
-  There are well established ways to support AMD in every comination of systems.
-  <br />
-  Check out [github.com/amdjs](https://github.com/amdjs)
+  ### There are well established ways to support AMD in every combination of systems.
+
+  #### Check out [github.com/amdjs](https://github.com/amdjs)
 </section>
 
 <section data-markdown>
-  # FUD | Boilerplate
+<script type="text/template">
+# FUD | Boilerplate
 
-  <br />
-  AMD actually requires less characters/lines than the popular alternatives.
+### AMD actually requires less characters/lines than the popular alternatives.
 
-  <pre><code contenteditable>var x = require('x');
-  var y = require('y');
-  var z = require('z');
-  // vs.
-  require(['x', 'y', 'z'], function (x,y,z) {
+```javascript
+var x = require('x');
+var y = require('y');
+var z = require('z');
+// vs.
+require(['x', 'y', 'z'], function (x,y,z) {
 
-  });
-  </code></pre>
-  <br />
+});
+```
 
-  Not to mention, browser-side code needs minimally an IIFE to not leak.
+#### Not to mention, browser-side code needs minimally an IIFE to not leak.
+</script>
 </section>
 
-<section data-markdown class="oneliner">
-  Use.js helps with unmodified source
-  of modules that do not use AMD.
-  I prefer to just add it.
-  *It's easy™.*
+<section data-markdown>
+<script type="text/template">
+## FUD | Support
+
+```javascript
+requirejs.config({
+  shim: {
+    'jquery.colorize': {
+      deps: ['jquery'],
+      exports: 'jQuery.fn.colorize'
+    },
+    'jquery.scroll': {
+      deps: ['jquery'],
+      exports: 'jQuery.fn.scroll'
+    },
+    'backbone.layoutmanager': {
+      deps: ['backbone']
+      exports: 'Backbone.LayoutManager'
+    }
+  }
+});
+```
+
+</script>
 </section>
 
-<section data-markdown class="oneliner">
-  Build.sh has to go away.
-  We need a complex dependency management solution.
+<section data-markdown>
+<script type="text/template">
+## FUD | Versioning
 
-  <br />
-
-  <small>I'm glad it's here now, though, because script-tag soup is awful</small>
+```javascript
+requirejs.config({
+  map: {
+    'some/newmodule': {
+      'foo': 'foo1.2'
+    },
+    'some/oldmodule': {
+      'foo': 'foo1.0'
+    }
+  }
+});
+```
+</script>
 </section>
 
-<section data-markdown class="oneliner">
-  I think our dependency management tools shouldn't require load time preprocessing.
+<section data-markdown>
+  <script type="text/template">
+  ## Build.sh has to go away.
+  ### We need a complex dependency management solution.
+  </script>
+  <aside class="notes">I'm glad it's here now, though, because script-tag soup is awful</aside>
+</section>
+
+<section data-markdown>
+  ### I think our dependency management tools shouldn't *require* load time preprocessing.
 
   <br />
 
   <small>but if you want to enhance it at load time, that's fine</small>
 </section>
 
-<section data-markdown class="oneliner">
-  I think our dependency management shouldn't *require* us to need to run other languages.
+<section data-markdown>
+  ### I think our dependency management tools shouldn't *require* us to need to run other languages.
 </section>
 
-<section data-markdown class="oneliner">
-  I think our dependency management shouldn't force us to manage dependencies outside of our code.
+<section data-markdown>
+  ### I think our dependency management shouldn't force us to manage dependencies *outside* of our code.
 
   <br />
 
   <small>you'll forget/get it wrong.</small>
 </section>
-
-<section data-markdown class="oneliner">
-  ES *Harmony Modules* look cool.
-
-  <small>But aren't currently viable/stable. Use those when they are.</small>
 </section>
 
-<section data-markdown class="oneliner">
-  I have a lengthy blog post on [my thoughts on AMD](http://alexsexton.com/blog/2012/03/my-thoughts-on-amd/).
-</section>
-
-</section>
-
-<section data-markdown class="oneliner">
-So from now on, I'm gonna use *AMD* in these examples.
-
-<br />
-
-<small style="line-height:0.8;">Nearly everything is possible via other module systems via load time precompilation, but my examples are already implementable in require.js, etc.</small>
-</section>
-
-<section>
 <section data-markdown>
-  ## My new puppy: *batman*
+<script type="text/template">
+## So from now on, I'm gonna use *AMD* in these examples.
+</script>
 
-  <img src="img/batman1.jpg" style="height:600px" />
+<aside class="notes">Nearly everything is possible via other module systems via load time precompilation, but my examples are already implementable in require.js, etc.</aside>
 </section>
+
 <section data-markdown>
-  ## My new puppy: *batman*
-
-  <img src="img/batman2.jpg" style="height:600px" />
-</section>
-<section data-markdown>
-  ## My new puppy: *batman*
-
-  <img src="img/batman3.jpg" style="height:600px" />
-</section>
-<section data-markdown>
-  ## My new puppy: *batman*
-
-  <img src="img/batman4.jpg" style="height:600px" />
-</section>
-<section data-markdown>
-  ## My new puppy: *batman*
-
-  <img src="img/batman5.jpg" style="height:600px" />
-</section>
-</section>
-
-<section data-markdown class="oneliner">
 # AMD Plugins
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## *Transparent Middleware*
 
 Think Connect for node, but for your modules
@@ -679,8 +672,8 @@ Think Connect for node, but for your modules
 .flowchart div {
   color : #A6E22E;
   font-weight : bold;
-  width : 340px;
-  height : 240px;
+  width : 250px;
+  height : 200px;
   float: left;
   margin : 20px;
   padding : 100px 20px 0;
@@ -690,8 +683,7 @@ Think Connect for node, but for your modules
 }
 </style>
 <section>
-<section data-markdown>
-  ## How plugins work
+  <h2>How plugins work</h2>
 
   <div class="flowchart">
     <div>Require a module</div>
@@ -699,228 +691,211 @@ Think Connect for node, but for your modules
     <div>Return the result</div>
   </div>
 </section>
+
 <section data-markdown>
-  ## How plugins work
-
-  <br />
-  <pre><code contenteditable>write: function (pluginName, name, write) { ... },
-  load: function (name, parentRequire, load, config) {
-    // Require the intended dependency
-    parentRequire([name], function (val) {
-      // Add extra functionality
-      val.extra = function () { alert('extra!'); };
-      // resolve the dependency manually
-      load(val);
-    });
-  }
-  </code></pre>
-  <pre><code contenteditable>require(['plugin!module'], function (module) {
-    module.extra(); // alerts 'extra!'
-  });
-  </code></pre>
-</section>
+### We can signficantly *reduce boilerplate* by using this simple feature.
 </section>
 
-<section data-markdown class="oneliner">
-We can signficantly *reduce boilerplate* by using this simple feature.
-</section>
-
-<section data-markdown class="oneliner">
-# Getting Rid of MVWTF *Boilerplate*
-</section>
-
-<section data-markdown class="oneliner">
-One of the goals of ES Harmony is to reduce
-*setup boilerplate*.
-We should have the same goals in our modules.
+<section data-markdown>
+# Getting Rid of *Boilerplate*
 </section>
 
 <section>
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## A simple example
 
-  What can we get rid of?
-  <pre><code contenteditable>define('view/main', [
-  'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
-  ], function (Backbone, Handlebars, oneTxt, myHelper) {
-    Handlebars.registerHelper('myHelper', myHelper);
-    return Backbone.view.extend({
-      initialize : function () {
-        this.template = Handlebars.compile(oneTxt);
-      }
-    });
+### What can we get rid of?
+
+```javascript
+define('view/main', [
+'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
+], function (Backbone, Handlebars, oneTxt, myHelper) {
+
+  Handlebars.registerHelper('myHelper', myHelper);
+
+  return Backbone.view.extend({
+    initialize : function () {
+      this.template = Handlebars.compile(oneTxt);
+    }
   });
-  </code></pre>
+});
+```
+
+</script>
 </section>
 
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## A simple example
 
-  First let's make it an anonymous module
-  <pre><code contenteditable>define([
-  'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
-  ], function (Backbone, Handlebars, oneTxt, myHelper) {
-    Handlebars.registerHelper('myHelper', myHelper);
-    return Backbone.view.extend({
-      initialize : function () {
-        this.template = Handlebars.compile(oneTxt);
-      }
-    });
+### First let's make it an anonymous module
+
+```javascript
+define([
+'backbone', 'handlebars', 'text!tmpl/one', 'h/myHelper'
+], function (Backbone, Handlebars, oneTxt, myHelper) {
+
+  Handlebars.registerHelper('myHelper', myHelper);
+
+  return Backbone.view.extend({
+    initialize : function () {
+      this.template = Handlebars.compile(oneTxt);
+    }
   });
-  </code></pre>
+});
+```
+</script>
 </section>
 
 <section data-markdown style="margin-top:-7%;">
-  ## A simple example
+<script type="text/template">
+## A simple example
 
-  Then let's require it via a *view!* plugin
-  <pre><code contenteditable>define([
-  &nbsp; 'handlebars', 'text!tmpl/one', 'h/myHelper'
-  ], function (Handlebars, oneTxt, myHelper) {
-    Handlebars.registerHelper('myHelper', myHelper);
-    return {
-      initialize : function () {
-        this.template = Handlebars.compile(oneTxt);
-      }
-    };
-  });
-  // use via: require('view!main');
-  // the view! plugin could automatically start in the
-  // `view` folder for you
-  </code></pre>
+#### Then let's require it via a *view!* plugin
 
-  The *view!* plugin would simply return the module wrapped as a Backbone.extended object
+```javascript
+define([
+ 'handlebars', 'text!tmpl/one', 'h/myHelper'
+], function (Handlebars, oneTxt, myHelper) {
+  Handlebars.registerHelper('myHelper', myHelper);
+  return {
+    initialize : function () {
+      this.template = Handlebars.compile(oneTxt);
+    }
+  };
+});
+// use via: require('view!main');
+// the view! plugin could automatically start in the
+// 'view' folder for you
+```
+
+#### The *view!* plugin would simply return the module wrapped as a `Backbone.extend`ed object
+</script>
 </section>
 
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## A simple example
 
-  Then let's turn template compilation into a plugin too
-  <pre><code contenteditable>define(['handlebars', 'hbs!tmpl/one', 'h/myHelper'],
-  function (Handlebars, one, myHelper) {
-    Handlebars.registerHelper('myHelper', myHelper);
-    return {
-      initialize : function () {
-        this.template = one;
-      }
-    };
-  });
-  </code></pre>
+### Then let's turn template compilation into a plugin too
 
-  <br />
+```javascript
+define(['handlebars', 'hbs!tmpl/one', 'h/myHelper'],
+function (Handlebars, one, myHelper) {
+  Handlebars.registerHelper('myHelper', myHelper);
+  return {
+    initialize : function () {
+      this.template = one;
+    }
+  };
+});
+```
 
-  The *hbs!* plugin can just return templates as a function.
+#### The *hbs!* plugin can just return templates as a function.
+</script>
 </section>
 
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## A simple example
 
-  Then let's resolve the template's dependencies automatically
-  <pre><code contenteditable>define(['hbs!tmpl/one'], function (one) {
-    return {
-      initialize : function () {
-        this.template = one;
-      }
-    };
-  });
-  </code></pre>
+### Then let's resolve the template's dependencies automatically
 
-  <br />
+```javascript
+define(['hbs!tmpl/one'], function (one) {
+  return {
+    initialize : function () {
+      this.template = one;
+    }
+  };
+});
+```
 
-  With handlebars, I can just introspect a template's AST to figure out it's dependencies.
+#### With handlebars, I can just introspect a template's AST to figure out it's dependencies.
+</script>
 </section>
 
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## *Ultimately*
+### you could create a convention to always have a template with the same name as a view
 
-  *Ultimately*
-  you could create a convention to always
-  have a template with the same name as a view
-  <pre><code contenteditable>define({
-      initialize : function () {}
-  });
-  </code></pre>
+```javascript
+define({
+    initialize : function () {}
+});
+```
 
-  <br />
-
-  <small>This one is a bit extreme, as most apps can't follow that convention rigidly.
-  And because a real world example would have other dependencies anyways. But it has a nice effect.</small>
+#### This one is a bit extreme, as most apps can't follow that convention rigidly. And because a real world example would have other dependencies anyways. But it has a nice effect.
+</script>
 </section>
 
 <section data-markdown>
-  ## A simple example
+<script type="text/template">
+## *And since I'm being contrived*
 
-  <br />
-  *And since I'm being contrived*
-  <pre><code contenteditable>define({});
-    </code></pre>
+```javascript
+define({});
+```
 
-  <br />
-
-  Backbone doesn't require you to define an *initialize* function.
+Backbone doesn't require you to define an *initialize* function.
+</script>
 </section>
 </section>
 
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 # Builds and performance
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
 ## Plugins as a vehicle for build time
 ## *static compilation*
 </section>
 
-<section data-markdown class="oneliner">
-There's so much that your app *doesn't* need to do at runtime in production.
+<section data-markdown>
+### There's so much that your app *doesn't* need to do at runtime in production.
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ## Consider Templates
 
-<br />
-<pre><code contenteditable>require(['handlebars', 'text!tmpl'],
+```javascript
+require(['handlebars', 'text!tmpl'],
 function (Handlebars, tmpl) {
   alert( Handlebars.compile( tmpl )({ data: 1 }) );
 });
-</code></pre>
+```
 
-<br />
-
-This includes the parser and the compiler for Handlebars, and must re-run those (slowest) parts on each render.
+#### This includes the parser and the compiler for Handlebars, and must re-run those (slowest) parts on each render.
+</script>
 </section>
 
-<section data-markdown class="oneliner">
-How many of you are
-*precompiling*
-templates at all?
+<section data-markdown>
+### How many of you are
+## *precompiling*
+### templates at all?
 </section>
 
 <section>
 <section data-markdown>
-  ## Auto precompilation
+## Auto precompilation
 
-  We can make our modules do _all_ the work here.
-
-  <pre><code contenteditable>load: function (name, parentRequire, load, config) {
-    load.asText('hbs!'+name,
-      'define(["handlebars"], function (H){ '+
-       'return H.template(H.precompile(' + tmplTxt +
-      ')); })');
-
-    parentRequire(['hbs!'+name], function (val) {
-      load(val);
-    });
-  }
-  </pre></code>
+### We can make our modules do _all_ the work here.
 </section>
 
-<section data-markdown class="oneliner">
-  At runtime before build, the plugin is *eval'd*.
+<section data-markdown>
+## At runtime before build, the plugin is *eval'd*.
 </section>
 
-<section data-markdown class="oneliner">
-  At build-time, it is written directly as the module.
+<section data-markdown>
+## At build-time, it is written directly as the module.
+</section>
+
+<section data-markdown>
+## [github.com/SlexAxton/require-handlebars-plugin](https://github.com/SlexAxton/require-handlebars-plugin)
 </section>
 
 <section data-markdown>
@@ -936,29 +911,29 @@ templates at all?
     optimizations (dead code removal)
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## we can go *deeper*
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## Templates can declare *style* dependencies
 
-  and we can build up only the styles that are _used_.
+  ### and we can build up only the styles that are _used_.
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## We can introspect CSS
 
-  and *inline images* as data-uris at build time.
+  ### and *inline images* as data-uris at build time.
 </section>
 
-<section data-markdown class="oneliner">
-  ## We can inline the entire CSS block
+<section data-markdown>
+  ## We can inline the entire CSS block into our JS
 
-  (including data-uris) and inject it with a *&lt;style&gt;* tag.
+  ### (including data-uris) and inject it with a style tag.
 </section>
 
-<section data-markdown class="oneliner">
+<section data-markdown>
   ## We can bring our entire app down to a
   ## *single request*
 </section>
@@ -966,27 +941,8 @@ templates at all?
 </section>
 
 <section>
-<section data-markdown class="oneliner">
-  ## Static precompiliation is *so cool*
-</section>
-
 <section data-markdown>
-  ## Dead Code Removal
-
-  Use in tandem with *has.js* to enable dead code removal.
-
-  <pre><code contenteditable>if (has('val') ) {
-  &nbsp;  doSomething();
-  }
-  // changes to
-  if (false) {
-    doSomething();
-  }
-  </code></pre>
-
-  <br />
-
-  Uglify will remove dead code blocks like this
+  ## Static precompiliation is *so cool*
 </section>
 
 <section data-markdown>
@@ -1002,31 +958,6 @@ templates at all?
   * less.js
 
 </section>
-
-<section data-markdown>
-  ## Build Profiles
-
-  <pre><code contenteditable>require(['profile!module'], function (mod) {
-    // mod is different depending on the profile setting.
-  });
-  </code></pre>
-
-  <br />
-
-  This can be *hugely* helpful when doing
-  specialized builds for *IE* or *Mobile Devices*.
-
-  <br />
-  Consider simply a jQuery/zepto profile.
-
-  <br />
-  See [jensarps/AMD-feature](https://github.com/jensarps/AMD-feature)
-</section>
-
-</section>
-
-<section data-markdown class="oneliner">
-The goal is to have a nice dev experience, but at build time, send absolutely *only* the code that is *necessary* and *precompute everything* possible.
 </section>
 
 <section>
