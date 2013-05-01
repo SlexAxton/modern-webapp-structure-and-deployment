@@ -146,19 +146,20 @@ Modules are hard because their goal is interoperability, and everyone does them 
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ![lib/img/brain.jpg](lib/img/brain.jpg)
-<br />
 
 ### Your need for modules is directly related to how much of your app you can hold in your head at once.
-
+</script>
 <aside class="notes">
 Modules ideally are small composable pieces that do one or a few things well (depending on if you're substack or not).
 </aside>
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ### Similarly, the *MVC* (or *MVWTF*) pattern is appealing for large applications and encourages code reuse &amp; separation of concerns.
-
+</script>
 <aside class="notes">
 We're not really talking about MVC though. Pick a pattern here and use it, but learn your tools well. I'll be using backbone examples quite a bit,
 not because I'm recommending it, but because it pretty much doesn't do anything.
@@ -177,6 +178,7 @@ not because I'm recommending it, but because it pretty much doesn't do anything.
 
 
 <section data-markdown>
+<script type="text/template">
 ## All too common
 
 ```sh
@@ -191,7 +193,7 @@ not because I'm recommending it, but because it pretty much doesn't do anything.
 <br />
 
 ### *Dependency management hell*
-
+</script>
 <aside class="notes">
 You have a general idea of where things might be, but you've got a couple thousand line files.
 </aside>
@@ -282,8 +284,9 @@ You can mash this up into folders as well, but it's a bit verbose/duplicate-y
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ## You can *find* your code.
-
+</script>
 <aside class="notes">
 Module names are something you remember, and map directly to a file that is simple and where you'd expect.
 </aside>
@@ -373,6 +376,7 @@ This is good because you're not duplicating names. File names and locations defi
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ## When you no longer *require* a
 ## file, it is no longer requested
 ## or included.
@@ -380,6 +384,7 @@ This is good because you're not duplicating names. File names and locations defi
 # &nbsp;
 
 ### performance++
+</script>
 <aside class="notes">
 In the world I used to live in, we'd have old plugins and cruft that would be continued to be shipped and built
 into our app, long after we stopped using it. I often see people ship multiple copies of jQuery. :/
@@ -577,8 +582,10 @@ for the file at the given path and returns the contents as a string.
 </section>
 
 <section data-markdown>
-  ## The web is *async*.
-  <aside class="notes">
+<script type="text/template">
+## The web is *async*.
+</script>
+<aside class="notes">
   The A in AMD stands for asynchronous. It's really the only one.
   </aside>
 </section>
@@ -590,16 +597,18 @@ for the file at the given path and returns the contents as a string.
 </section>
 
 <section data-markdown>
-  ### I think it's fine as a
-  ## *compilation target*
-  ### if you hate the syntax.
+<script type="text/template">
+### I think it's fine as a
+## *compilation target*
+### if you hate the syntax.
 
-  ## &nbsp;
+## &nbsp;
 
-  <small>But I think a unified target is ideal.</small>
-  <aside class="notes">
-  Browserify is great. I think it should output AMD!
-  </aside>
+#### But I think a unified target is ideal.
+</script>
+<aside class="notes">
+Browserify is great. I think it should output AMD!
+</aside>
 </section>
 
 <section data-markdown>
@@ -676,11 +685,11 @@ requirejs.config({
 </section>
 
 <section data-markdown>
-  <script type="text/template">
-  ## Build.sh has to go away.
-  ### We need a complex dependency management solution.
-  </script>
-  <aside class="notes">I'm glad it's here now, though, because script-tag soup is awful</aside>
+<script type="text/template">
+## Build.sh has to go away.
+### We need a complex dependency management solution.
+</script>
+<aside class="notes">I'm glad it's here now, though, because script-tag soup is awful</aside>
 </section>
 
 <section data-markdown>
@@ -945,15 +954,18 @@ function (Handlebars, tmpl) {
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ## At runtime before build, the plugin is *eval'd*.
-
+</script>
 <aside class="notes">
 So when you are developing, everything just gets pulled in as text, compiled and passed through as a function.
 </aside>
 </section>
 
 <section data-markdown>
+<script type="text/template">
 ## At build-time, it is written directly as the module.
+</script>
 <aside class="notes">
 Since the templates won't change we can precompile the templates into functions, and save them as real modules, and build them
 directly into our app. Then we can pull out the parser and compiler from the templating language, and take a ton out of the chain.
@@ -1003,8 +1015,10 @@ This gzips pretty well.
 </section>
 
 <section data-markdown>
-  ## We can bring our entire app down to a
-  ## *single request*
+<script type="text/template">
+## We can bring our entire app down to a
+## *single request*
+</script>
 
   <aside class="notes">
   But that's not always best. We will discuss later.
