@@ -139,17 +139,30 @@ function Module () {
 So why do I need them now?
 
 </script>
+
+<aside class="notes">
+Modules are hard because their goal is interoperability, and everyone does them differently. Not because they're inherently *hard*.
+</aside>
 </section>
 
 <section data-markdown>
 ![lib/img/brain.jpg](lib/img/brain.jpg)
 <br />
 
-Your need for modules is directly related to how much of your app you can hold in your head at once.
+### Your need for modules is directly related to how much of your app you can hold in your head at once.
+
+<aside class="notes">
+Modules ideally are small composable pieces that do one or a few things well (depending on if you're substack or not).
+</aside>
 </section>
 
 <section data-markdown>
 ### Similarly, the *MVC* (or *MVWTF*) pattern is appealing for large applications and encourages code reuse &amp; separation of concerns.
+
+<aside class="notes">
+We're not really talking about MVC though. Pick a pattern here and use it, but learn your tools well. I'll be using backbone examples quite a bit,
+not because I'm recommending it, but because it pretty much doesn't do anything.
+</aside>
 </section>
 
 <section data-markdown>
@@ -178,6 +191,10 @@ Your need for modules is directly related to how much of your app you can hold i
 <br />
 
 ### *Dependency management hell*
+
+<aside class="notes">
+You have a general idea of where things might be, but you've got a couple thousand line files.
+</aside>
 </section>
 
 <section data-markdown>
@@ -205,6 +222,9 @@ Which results in this file structure
 ```
 
 </script>
+<aside class="notes">
+This can be frustrating because you end up with files with the same names, but are different types. (Good editors help you).
+</aside>
 </section>
 
 <section data-markdown>
@@ -225,6 +245,9 @@ Which results in this file structure
   |- View.js
 ```
 </script>
+<aside class="notes">
+This can be frustrating because you've got a lot of files named `Model`
+</aside>
 </section>
 
 <section data-markdown>
@@ -244,6 +267,9 @@ Which results in this file structure
  |- UserView.js
 ```
 </script>
+<aside class="notes">
+You can mash this up into folders as well, but it's a bit verbose/duplicate-y
+</aside>
 </section>
 </section>
 
@@ -257,6 +283,10 @@ Which results in this file structure
 
 <section data-markdown>
 ## You can *find* your code.
+
+<aside class="notes">
+Module names are something you remember, and map directly to a file that is simple and where you'd expect.
+</aside>
 </section>
 
 <section data-markdown>
@@ -276,6 +306,10 @@ require(['util/A'], function (A) {
 // Or create new instances if you want!
 ```
 </script>
+
+<aside class="notes">
+Instances are shared, but you can use different contexts to get different instances, or return a factory.
+</aside>
 </section>
 
 <section>
@@ -315,6 +349,9 @@ define('some/module', function () {
 ```
 
 </script>
+<aside class="notes">
+This file would live at your base path + some/module.js
+</aside>
 </section>
 <section data-markdown>
 <script type="text/template">
@@ -329,6 +366,9 @@ define(/* just_use_the_filename, */ function () {
 ```
 
 </script>
+<aside class="notes">
+This is good because you're not duplicating names. File names and locations define module names, and nothing else does.
+</aside>
 </section>
 </section>
 
@@ -340,6 +380,10 @@ define(/* just_use_the_filename, */ function () {
 # &nbsp;
 
 ### performance++
+<aside class="notes">
+In the world I used to live in, we'd have old plugins and cruft that would be continued to be shipped and built
+into our app, long after we stopped using it. I often see people ship multiple copies of jQuery. :/
+</aside>
 </section>
 
 <section>
@@ -364,6 +408,9 @@ require(['underscore'], function (_) {
 ```
 
 </script>
+<aside class="notes">
+You don't have to change all your code, to switch out modules with identical apis. You can also just make names nicer or shorter.
+</aside>
 </section>
 
 <section data-markdown>
@@ -387,6 +434,11 @@ require(['template/base'], ...);
 ```
 
 </script>
+<aside class="notes">
+Choose your own good base file structures that map to your backend tools or your front end libs, but then give them decent paths.
+<br />
+Too much of this causes some confusion, but it's not too bad.
+</aside>
 </section>
 
 </section>
@@ -408,6 +460,9 @@ require(['template/base'], ...);
 ```
 
 </script>
+<aside class="notes">
+Require.js and most other module systems just assume everything is a folder til the last pathname section, then they just add a `.js`
+</aside>
 </section>
 
 <section data-markdown>
@@ -499,14 +554,10 @@ require(['text!tmpl/one'], function (tmplTxt) {
 
 ### Better ways than this to come.
 </script>
-</section>
-
-<section data-markdown>
-  ## Styles can be dependencies of templates as well
-</section>
-
-<section data-markdown>
-  ## Same goes for template helpers and UI Messages
+<aside class="notes">
+This is the first plugin we've seen. The text plugin makes an xhr request
+for the file at the given path and returns the contents as a string.
+</aside>
 </section>
 </section>
 
@@ -527,6 +578,9 @@ require(['text!tmpl/one'], function (tmplTxt) {
 
 <section data-markdown>
   ## The web is *async*.
+  <aside class="notes">
+  The A in AMD stands for asynchronous. It's really the only one.
+  </aside>
 </section>
 
 <section data-markdown>
@@ -543,6 +597,9 @@ require(['text!tmpl/one'], function (tmplTxt) {
   ## &nbsp;
 
   <small>But I think a unified target is ideal.</small>
+  <aside class="notes">
+  Browserify is great. I think it should output AMD!
+  </aside>
 </section>
 
 <section data-markdown>
@@ -652,7 +709,8 @@ requirejs.config({
 ## So from now on, I'm gonna use *AMD* in these examples.
 </script>
 
-<aside class="notes">Nearly everything is possible via other module systems via load time precompilation, but my examples are already implementable in require.js, etc.</aside>
+<aside class="notes">Nearly everything is possible via other module systems via load time precompilation, but my examples are already
+  implementable in require.js, etc.</aside>
 </section>
 
 <section data-markdown>
@@ -662,7 +720,7 @@ requirejs.config({
 <section data-markdown>
 ## *Transparent Middleware*
 
-Think Connect for node, but for your modules
+### Think Connect for node, but for your modules
 </section>
 
 <style type="text/css">
@@ -888,10 +946,21 @@ function (Handlebars, tmpl) {
 
 <section data-markdown>
 ## At runtime before build, the plugin is *eval'd*.
+
+<aside class="notes">
+So when you are developing, everything just gets pulled in as text, compiled and passed through as a function.
+</aside>
 </section>
 
 <section data-markdown>
 ## At build-time, it is written directly as the module.
+<aside class="notes">
+Since the templates won't change we can precompile the templates into functions, and save them as real modules, and build them
+directly into our app. Then we can pull out the parser and compiler from the templating language, and take a ton out of the chain.
+<br>
+<br>
+This gzips pretty well.
+</aside>
 </section>
 
 <section data-markdown>
@@ -936,6 +1005,10 @@ function (Handlebars, tmpl) {
 <section data-markdown>
   ## We can bring our entire app down to a
   ## *single request*
+
+  <aside class="notes">
+  But that's not always best. We will discuss later.
+  </aside>
 </section>
 
 </section>
@@ -1100,6 +1173,12 @@ Pretty much a fancy name for a bootstrap file
 
 ## You can use *modernizr* to load exactly the build that the user needs (and nothing more)
 </script>
+<aside class="notes">
+You want to use feature detection, and what you know about the state of the user, to only
+load exactly what they need. The scout file is in charge of figuring out that starting point.
+<br><br>
+Google has module-server, which will do this for you automatically.
+</aside>
 </section>
 
 <section data-markdown data-small-code>
@@ -1174,6 +1253,9 @@ Pretty much a fancy name for a bootstrap file
 
 Use any of the popular CDNs to get your **static builds** closer to their consumers
 </script>
+<aside class="notes">
+If you require dynamic pages, use something like Akamai as a proxy cache layer to do this. Otherwise, cloudfront or similar works.
+</aside>
 </section>
 
 
